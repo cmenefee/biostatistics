@@ -1,0 +1,269 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Methods in Biostatistics with R 
+Ciprian Crainiceanu, Brian Caffo, John Muschelli
+
+#1. Introduction
+
+"....We provide a modern look at introductory biostatistical concepts and associated computational tools, reflecting the latest developments in computation and vi- sualization using the R language environment (R Core Team 2016). The idea is to offer a complete, online, live book that evolves with the newest developments and is continuously enriched by additional concepts..."
+
+1.1 Biostatistics 
+
+"....Biostatistics is the theory and methodology for the acquisition and use of quantitative evidence in biomedical research. 
+Biostatisticians develop innovative designs and analytic methods targeted at increasing available information, 
+improving the relevance and validity of statistical analyses, making best use of available information and communicating relevant uncertainties....”
+
+"....Biostatistics is a challenging subject to master if one is interested in understanding both the underlying concepts and their appropriate implementation. 
+....Biostatistics can be viewed as a powerful and practical philosophy of science, in which the scientific hypothesis, 
+the experiment, the data, the model, and the associated inference form the basis of scientific progress. 
+....Biostatistics is hard because it is focused on solving difficult problems using simple approaches and simplicity is difficult to achieve in complex scenarios.
+....Biostatistics is not hard in the usual sense that it requires either deep mathematical concepts or committing large books to memory...." 
+
+"....The difficulty of biostatistics rests in the different philosophy, the different way of thinking, 
+and the different set of skills required to process human communication of scientific problems and their translation into well-defined problems that can be solved with data. 
+Once a scientific promlem is defined, the biostatistics philosophy is to try to solve it using the simplest possible approaches that are not too simplistic. 
+Thus, parsimony and inductive reasoning are fundamental concepts in biostatistics...."
+
+"....biostatistics starts with the current accepted state of knowledge (the collection of null hypotheses) and uses data to inductively refute or reinforce
+parts of the knowledge or generate new potential knowledge (new null hypotheses). In the biostatistical philosophy there is no truth, just the state of current knowledge...."
+
+"....Biostatistics requires: 
+(1) a tight coupling of the biostatistical methods with ethical and scientific goals of research; 
+(2) an emphasis on the scientific interpretation of statistical evidence to impact policy; and 
+(3) a detailed acknowledgment of assumptions and a comprehensive evaluation of the robustness of conclusions to these assumptions...."
+
+1.4 Data 
+All data located for this course can be downloaded on the leanpub book page(https://leanpub.com/biostatmethods) or can be downloaded directly from GitHub(https://github.com/muschellij2/biostatmethods).
+
+
+
+
+
+#Chapter 2 Introduction to R
+
+
+2.4 Objects In R
+
+"....Almost everything is an “object” or “variable.”....most things are relevant only with respect to a data set...."
+
+2.5 Assignment
+"....There is also a “forward assignment” operator that exists, but this is rarely used and we do not recommend using it...."
+Oh no.
+
+2.6 Data types In R
+
+"....The three most fundamental: numeric (numbers), character (strings or “words”), and logicals (TRUE or FALSE). 
+
+"....One additional data type: factors. Factors are categorical data types. 
+The categories of a factor are called the “levels” of that factor. The levels of factors usually contain human-readable levels (e.g., “Male” and “Female”). 
+Factors become increasingly useful when we fit models, as one can define the baseline category by the levels of the factor, which affects the interpretation of coefficients. 
+Some refer to vectors of length 1 as a “scalar”. In other languages, there is a distinction between scalars and vectors, but not in R. 
+So you can think of a vector as a 1-dimensional object that can have anywhere from 0 to a large number of elements...."
+
+2.7.1 More than one number: vectors In R
+
+"....Anything having one dimension is generally referred to as a “vector”. A vector has a specified length. Technically, a vector may have length 0, which means nothing is in it. 
+But usually vectors have one or multiple objects in them. Those objects all must have the same data type (e.g., all numbers or all characters or all logicals)...."
+
+2.7.3 Sequences
+
+````{r}
+1:5
+-5:1
+-(5:1)
+seq(1,5)
+seq(1,7 by = 0.4)
+seq(by = 0.4, to = 7, from = 1)
+
+
+````
+
+
+2.7.4 Operations on numeric vectors
+
+````{r}
+x_length_2 = c(1, 2) 
+x_length_2 * 3
+sqrt(x_length_2)
+
+````
+
+
+2.7.5 Some standard operations on vectors 
+
+````{r}
+x_length_3 = c(10, 20, 30)
+length(x_length_3)
+x = c(2, 1, 1, 4)
+sort(unique(x))
+sample(x)
+sample(x, size = 2)
+
+# sample(x, size = 10) will error 
+sample(x, size = 10, replace = TRUE)
+
+````
+
+
+
+2.7.7 Data type coercion 
+"....Vectors can only have one data type in them...."
+
+"....Logicals can be coerced to numerics (0 and 1 values) and coerced to characters ("TRUE" and "FALSE", note the quotes). 
+Numerics can be coerced into characters (5.6 changes to "5.6")...."
+
+You can determine the data type of an object with the typeof() function: 
+
+````{r}
+typeof(c(5.2, TRUE, FALSE))
+
+````
+
+2.7.8 More than one dimension: Matrices 
+
+"....A matrix is like a vector, but it has two dimensions, rows and columns. Like vectors, matrices can contain only one data type...."
+So I imagine a vector is just 'A row' and a matrix is 'A row and a column', or something like that
+
+````{r}
+matrix(1)
+matrix(1:6, nrow = 2, ncol = 3) 
+matrix(1:6, nrow = 2, ncol = 3, byrow = TRUE) # filled by row
+
+````
+
+2.7.9 More than one dimension: data.frames 
+
+"....A data.frame is like a matrix in that it has rows and columns. A data.frame can have columns of different data types...."
+
+....Note, a default on the data.frame() function is stringsAsFactors = TRUE, which indicates that all strings should be converted to factors. 
+Many times, you want to clean these columns and then convert them to factors directly. 
+So we will set that option to FALSE...."
+
+
+````{r}
+df = data.frame(age = c(25, 30, 32, 42), 
+                handed = c("left", "right", "ambidextrous", "left"), 
+                stringsAsFactors = FALSE)
+````
+
+
+2.7.10 Dimensions of an object 
+
+There are functions that get attributes about a matrix/data.frame that are useful for analysis. 
+
+The dim function returns the dimensions (rows and columns, respectively) of a data set: 
+````{r}
+df = data.frame(age = c(25, 30, 32, 42), 
+                handed = c("left", "right", "ambidextrous", "left"), 
+                stringsAsFactors = FALSE)
+dim(df) 
+
+````
+
+Number of rows or columns
+````{r}
+df = data.frame(age = c(25, 30, 32, 42), 
+                handed = c("left", "right", "ambidextrous", "left"), 
+                stringsAsFactors = FALSE)
+nrow(df)
+ncol(df)
+
+````
+
+2.8 Logical operations 
+
+"....Perform some logical tests that return logical data. 
+greater/less than (>, <)
+greater/less than or equal to (>=, <=)
+equal to (== “double equals”)
+and not equal to (!=)
+These are called “relational operators” or “comparison operators”
+
+There are also the standard “logical operators”: 
+not/negate (!), 
+AND (&), and 
+OR (|)...." 
+
+````{r}
+x = c(1, 3, 4, 5) 
+x < 4
+x > 3
+x >= 3
+x == 3
+x != 3
+x = c(1, 3, 4, 5) 
+x > 3 | x == 1 
+!(x > 3 | x == 1) # negates the statement - turns TRUE to FALSE [1] FALSE TRUE FALSE FALSE 
+x != 3 & x != 5
+x == 3 | x == 4
+
+````
+
+2.8.1 The %in% Operator 
+
+"....Many times, we want to keep or exclude based on a number of values...." 
+
+````{r}
+x = c(1, 3, 4, 5) 
+x %in% c(3,4)
+
+````
+This feels like an "is in?" or may even an "is?" in that it asks: "are any of these values in the vector?".
+
+
+
+2.9 Subsetting 2.9.1 Subsetting vectors
+
+````{r}
+x = c(1, 3, 4, 5)
+x[4]
+x > 2
+x[ x > 2 ]
+
+````
+
+2.9.2 Subsetting matrices
+
+"....the syntax is [row subset, column subset]...."
+
+````{r}
+mat = matrix(1:6, nrow = 2)
+mat[1:2, 1]
+mat[1, 1:2]
+mat[1, c(FALSE, TRUE, FALSE)]
+mat[, c(FALSE, 3, TRUE)]
+mat[1:2, ]
+mat[, 2:3]
+mat[, c(FALSE, TRUE, FALSE)]
+
+````
+
+"....You can ensure that the result is a matrix, even if the result is one-dimensional using the drop = FALSE argument...."
+````{r}
+mat[,1, drop = FALSE]
+
+````
+
+
+2.12.1 Tibbles 
+
+Implemented in the tibble package. It is like a data.frame
+• Never coerces inputs (i.e. strings stay as strings!). 
+• Never adds row.names. 
+• Never changes column names. 
+• Only recycles length 1 inputs. (no wraparound) 
+• Automatically adds column names.
+
+````{r}
+tbl = tibble::as_tibble(df)
+
+````
+
+
+
+
+
+
