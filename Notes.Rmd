@@ -264,6 +264,155 @@ tbl = tibble::as_tibble(df)
 
 
 
+2.13 Problems 
+
+
+
+Problem 1. Consider the vector: num <- c("1.5", "2", "8.4")
+a. Convert num into a numeric vector using as.numeric 
+````{r}
+num <- c("1.5", "2", "8.4")
+as.numeric(num)
+
+````
+
+b. Convert num into a factor using factor, calling it num_fac. 
+````{r}
+num <- c("1.5", "2", "8.4")
+num_fac <- factor(num)
+
+````
+
+c. Convert num_fac into a numeric using as.numeric. 
+````{r}
+as.numeric(num_fac)
+
+````
+
+d. Convert num_fac into a numeric using as.numeric(as.character()) 
+````{r}
+as.numeric(as.character(num_fac))
+
+````
+
+
+
+Problem 2. Consider the vector: num <- c(0, 1, 1, 0) 
+a. Append TRUE to the num vector using c. 
+````{r}
+num <- c(0, 1, 1, 0) 
+num <- c(num, TRUE)
+num
+
+````
+
+b. Check the class of num using class. 
+````{r}
+num <- c(0, 1, 1, 0) 
+class(num)
+
+````
+
+c. Convert num into a logical vector using as.logical. 
+````{r}
+num <- c(0, 1, 1, 0) 
+as.logical(num)
+````
+
+d. Convert num into a logical vector where the result is TRUE if num is 0, using the == operator. 
+````{r}
+num <- c(0, 1, 1, 0) 
+as.logical(num == 0)
+
+````
+
+
+
+Problem 3. Consider the data set data_bmi from above. Perform the following operations: 
+a. Extract the column nams of data_bmi using the colnames() function. 
+````{r}
+file_name = file.path("Example_Data/bmi_age.txt")
+data_bmi = read.table(file = file_name, header = TRUE, stringsAsFactors = FALSE) # found elsewhere in the book. Downloaded from the repository
+colnames(data_bmi)
+
+````
+
+b. Subset the AGE column using data_bmi[, "AGE"]. 
+````{r}
+file_name = file.path("Example_Data/bmi_age.txt")
+data_bmi = read.table(file = file_name, header = TRUE, stringsAsFactors = FALSE)
+data_bmi[, "AGE"]
+
+````
+
+c. Subset the AGE column using data_bmi$AGE. 
+````{r}
+file_name = file.path("Example_Data/bmi_age.txt")
+data_bmi = read.table(file = file_name, header = TRUE, stringsAsFactors = FALSE)
+data_bmi$AGE
+
+````
+
+d. Subset the AGE and BMI columns using brackets and the c() function.
+````{r}
+file_name = file.path("Example_Data/bmi_age.txt")
+data_bmi = read.table(file = file_name, header = TRUE, stringsAsFactors = FALSE)
+data_bmi[c("AGE", "BMI")]
+
+````
+
+
+
+
+Problem 4. Here we will work with sequences and lengths: 
+a. Create a sequence from 1 to 4.5 by 0.24. Call this run_num. 
+````{r}
+run_num <-seq(from = 1, to = 4.5, by = 0.24)
+
+
+````
+
+b. What is the length of run_num. 
+````{r}
+length(run_num)
+
+````
+
+c. Extract the fifth element of run_num using brackets.
+````{r}
+run_num[5]
+
+````
+
+
+Problem 5. Let’s create a tibble called df:
+a. Extract the column x using the $.
+````{r}
+df = dplyr::data_frame(x = rnorm(10), y = rnorm(10), z = rnorm(10)) 
+df$x
+
+````
+
+b. Extract the column x using the [,] notation.
+````{r}
+df = dplyr::data_frame(x = rnorm(10), y = rnorm(10), z = rnorm(10)) 
+df["x"]
+
+````
+
+c. Extract columns x and z. 
+````{r}
+df = dplyr::data_frame(x = rnorm(10), y = rnorm(10), z = rnorm(10)) 
+df[c("x", "y")]
+
+````
+
+d. Extract the third and fifth rows of df and columns z and y.
+````{r}
+df = dplyr::data_frame(x = rnorm(10), y = rnorm(10), z = rnorm(10)) 
+
+````
+
 
 
 
