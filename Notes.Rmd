@@ -3,10 +3,27 @@ title: "R Notebook"
 output: html_notebook
 ---
 
-Methods in Biostatistics with R 
-Ciprian Crainiceanu, Brian Caffo, John Muschelli
+# Project Details {.tabset .tabset-fade .tabset-pills} 
+## The Book
+Methods in Biostatistics with R Ciprian Crainiceanu, Brian Caffo, John Muschelli
 
-#1. Introduction
+ * Intro Video: https://www.youtube.com/watch?v=MG1lZhixbS4
+ * Site: https://leanpub.com/biostatmethods
+
+## The Data
+From the Book
+
+ * https://github.com/muschellij2/biostatmethods
+
+
+
+
+
+
+
+
+
+# Chapter 1. Introduction
 
 "....We provide a modern look at introductory biostatistical concepts and associated computational tools, reflecting the latest developments in computation and vi- sualization using the R language environment (R Core Team 2016). The idea is to offer a complete, online, live book that evolves with the newest developments and is continuously enriched by additional concepts..."
 
@@ -35,25 +52,20 @@ parts of the knowledge or generate new potential knowledge (new null hypotheses)
 (2) an emphasis on the scientific interpretation of statistical evidence to impact policy; and 
 (3) a detailed acknowledgment of assumptions and a comprehensive evaluation of the robustness of conclusions to these assumptions...."
 
-1.4 Data 
-All data located for this course can be downloaded on the leanpub book page(https://leanpub.com/biostatmethods) or can be downloaded directly from GitHub(https://github.com/muschellij2/biostatmethods).
 
 
+# Chapter 2. Introduction to R
 
 
-
-#Chapter 2 Introduction to R
-
-
-2.4 Objects In R
+## 2.4 Objects In R
 
 "....Almost everything is an “object” or “variable.”....most things are relevant only with respect to a data set...."
 
-2.5 Assignment
+## 2.5 Assignment
 "....There is also a “forward assignment” operator that exists, but this is rarely used and we do not recommend using it...."
 Oh no.
 
-2.6 Data types In R
+## 2.6 Data types In R
 
 "....The three most fundamental: numeric (numbers), character (strings or “words”), and logicals (TRUE or FALSE). 
 
@@ -63,26 +75,26 @@ Factors become increasingly useful when we fit models, as one can define the bas
 Some refer to vectors of length 1 as a “scalar”. In other languages, there is a distinction between scalars and vectors, but not in R. 
 So you can think of a vector as a 1-dimensional object that can have anywhere from 0 to a large number of elements...."
 
-2.7.1 More than one number: vectors In R
+## 2.7.1 More than one number: vectors In R
 
 "....Anything having one dimension is generally referred to as a “vector”. A vector has a specified length. Technically, a vector may have length 0, which means nothing is in it. 
 But usually vectors have one or multiple objects in them. Those objects all must have the same data type (e.g., all numbers or all characters or all logicals)...."
 
-2.7.3 Sequences
+## 2.7.3 Sequences
 
 ````{r}
 1:5
 -5:1
 -(5:1)
 seq(1,5)
-seq(1,7 by = 0.4)
+seq(1,7, by = 0.4)
 seq(by = 0.4, to = 7, from = 1)
 
 
 ````
 
 
-2.7.4 Operations on numeric vectors
+## 2.7.4 Operations on numeric vectors
 
 ````{r}
 x_length_2 = c(1, 2) 
@@ -92,7 +104,7 @@ sqrt(x_length_2)
 ````
 
 
-2.7.5 Some standard operations on vectors 
+## 2.7.5 Some standard operations on vectors 
 
 ````{r}
 x_length_3 = c(10, 20, 30)
@@ -109,7 +121,7 @@ sample(x, size = 10, replace = TRUE)
 
 
 
-2.7.7 Data type coercion 
+## 2.7.7 Data type coercion 
 "....Vectors can only have one data type in them...."
 
 "....Logicals can be coerced to numerics (0 and 1 values) and coerced to characters ("TRUE" and "FALSE", note the quotes). 
@@ -122,7 +134,7 @@ typeof(c(5.2, TRUE, FALSE))
 
 ````
 
-2.7.8 More than one dimension: Matrices 
+## 2.7.8 More than one dimension: Matrices 
 
 "....A matrix is like a vector, but it has two dimensions, rows and columns. Like vectors, matrices can contain only one data type...."
 So I imagine a vector is just 'A row' and a matrix is 'A row and a column', or something like that
@@ -134,7 +146,7 @@ matrix(1:6, nrow = 2, ncol = 3, byrow = TRUE) # filled by row
 
 ````
 
-2.7.9 More than one dimension: data.frames 
+## 2.7.9 More than one dimension: data.frames 
 
 "....A data.frame is like a matrix in that it has rows and columns. A data.frame can have columns of different data types...."
 
@@ -150,7 +162,7 @@ df = data.frame(age = c(25, 30, 32, 42),
 ````
 
 
-2.7.10 Dimensions of an object 
+## 2.7.10 Dimensions of an object 
 
 There are functions that get attributes about a matrix/data.frame that are useful for analysis. 
 
@@ -173,7 +185,7 @@ ncol(df)
 
 ````
 
-2.8 Logical operations 
+## 2.8 Logical operations 
 
 "....Perform some logical tests that return logical data. 
 greater/less than (>, <)
@@ -202,7 +214,7 @@ x == 3 | x == 4
 
 ````
 
-2.8.1 The %in% Operator 
+## 2.8.1 The %in% Operator 
 
 "....Many times, we want to keep or exclude based on a number of values...." 
 
@@ -215,7 +227,7 @@ This feels like an "is in?" or may even an "is?" in that it asks: "are any of th
 
 
 
-2.9 Subsetting 2.9.1 Subsetting vectors
+## 2.9 Subsetting 2.9.1 Subsetting vectors
 
 ````{r}
 x = c(1, 3, 4, 5)
@@ -225,7 +237,7 @@ x[ x > 2 ]
 
 ````
 
-2.9.2 Subsetting matrices
+## 2.9.2 Subsetting matrices
 
 "....the syntax is [row subset, column subset]...."
 
@@ -248,14 +260,15 @@ mat[,1, drop = FALSE]
 ````
 
 
-2.12.1 Tibbles 
+## 2.12.1 Tibbles 
 
 Implemented in the tibble package. It is like a data.frame
-• Never coerces inputs (i.e. strings stay as strings!). 
-• Never adds row.names. 
-• Never changes column names. 
-• Only recycles length 1 inputs. (no wraparound) 
-• Automatically adds column names.
+
+* Never coerces inputs (i.e. strings stay as strings!). 
+* Never adds row.names. 
+* Never changes column names. 
+* Only recycles length 1 inputs. (no wraparound) 
+* Automatically adds column names.
 
 ````{r}
 tbl = tibble::as_tibble(df)
@@ -264,11 +277,11 @@ tbl = tibble::as_tibble(df)
 
 
 
-2.13 Problems 
+## 2.13 Problems 
 
 
 
-Problem 1. Consider the vector: num <- c("1.5", "2", "8.4")
+### Problem 1. Consider the vector: num <- c("1.5", "2", "8.4")
 a. Convert num into a numeric vector using as.numeric 
 ````{r}
 num <- c("1.5", "2", "8.4")
@@ -297,7 +310,7 @@ as.numeric(as.character(num_fac))
 
 
 
-Problem 2. Consider the vector: num <- c(0, 1, 1, 0) 
+### Problem 2. Consider the vector: num <- c(0, 1, 1, 0) 
 a. Append TRUE to the num vector using c. 
 ````{r}
 num <- c(0, 1, 1, 0) 
@@ -328,7 +341,7 @@ as.logical(num == 0)
 
 
 
-Problem 3. Consider the data set data_bmi from above. Perform the following operations: 
+### Problem 3. Consider the data set data_bmi from above. Perform the following operations: 
 a. Extract the column nams of data_bmi using the colnames() function. 
 ````{r}
 file_name = file.path("Example_Data/bmi_age.txt")
@@ -364,7 +377,7 @@ data_bmi[c("AGE", "BMI")]
 
 
 
-Problem 4. Here we will work with sequences and lengths: 
+### Problem 4. Here we will work with sequences and lengths: 
 a. Create a sequence from 1 to 4.5 by 0.24. Call this run_num. 
 ````{r}
 run_num <-seq(from = 1, to = 4.5, by = 0.24)
@@ -385,7 +398,7 @@ run_num[5]
 ````
 
 
-Problem 5. Let’s create a tibble called df:
+### Problem 5. Let’s create a tibble called df:
 a. Extract the column x using the $.
 ````{r}
 df = dplyr::data_frame(x = rnorm(10), y = rnorm(10), z = rnorm(10)) 
@@ -397,12 +410,6 @@ b. Extract the column x using the [,] notation.
 ````{r}
 df = dplyr::data_frame(x = rnorm(10), y = rnorm(10), z = rnorm(10)) 
 df[,"x"]
-
-
-
-
-
-
 ````
 
 c. Extract columns x and z. 
@@ -422,7 +429,7 @@ df[c("x","y")]
 
 
 
-Problem 6
+### Problem 6
 a. Get the mean of the column x using the $ operator. 
 
 ````{r}
@@ -448,7 +455,7 @@ c. Look at the summarize function to look ahead to future chapters and try to do
 print(paste("K"))
 ````
 
-Problem 7.
+### Problem 7.
 Consider the data set data_bmi using the BMI data, but read in using readr: 
 
 ````{r}
@@ -456,7 +463,173 @@ file_name = "Example_Data/bmi_age.txt"
 data_bmi = readr::read_table2(file = file_name) 
 ````
 a. What is the class of data_bmi? 
+````{r}
+file_name = "Example_Data/bmi_age.txt"
+data_bmi = readr::read_table2(file = file_name)
+class(data_bmi)
+````
+
+
+
 b. What is the class of data_bmi[, "AGE"]? 
+````{r}
+file_name = "Example_Data/bmi_age.txt"
+data_bmi = readr::read_table2(file = file_name)
+class(data_bmi[, "AGE"])
+````
+
+
 c. What is the class of data_bmi$AGE? 
+````{r}
+file_name = "Example_Data/bmi_age.txt"
+data_bmi = readr::read_table2(file = file_name)
+class(data_bmi$AGE)
+````
+
+
+
 d. What is the class of data_bmi[, "AGE", drop = TRUE]?
+````{r}
+file_name = "Example_Data/bmi_age.txt"
+data_bmi = readr::read_table2(file = file_name)
+class(data_bmi[, "AGE", drop = TRUE])
+````
+
+
+
+### Problem 8. Consider the data set data_bmi using the BMI data, but read in using readr: 
+file_name = "bmi_age.txt" 
+data_bmi = readr::read_table2(file = file_name) 
+Parsed with column specification: 
+
+cols( PID = col_double(), BMI = col_double(), SEX = col_double(), AGE = col_double() ) 
+
+a. What is the mean of the AGE column? 
+````{r}
+file_name = "Example_Data/bmi_age.txt"
+data_bmi = readr::read_table2(file = file_name)
+mean(data_bmi$AGE)
+````
+
+
+
+b. Set the 3rd element of data_bmi$AGE to be 42?
+````{r}
+file_name = "Example_Data/bmi_age.txt"
+data_bmi = readr::read_table2(file = file_name)
+data_bmi$AGE[3] = 42
+````
+c. What is the mean of the AGE column now?
+````{r}
+file_name = "Example_Data/bmi_age.txt"
+data_bmi = readr::read_table2(file = file_name)
+mean(data_bmi$AGE)
+````
+
+
+### Problem 9. Use data_bmi from the above problem: 
+
+a. Remove the X5 column using data_bmi$X5 = NULL 
+````{r}
+file_name = "Example_Data/bmi_age.txt"
+data_bmi = readr::read_table2(file = file_name)
+data_bmi$X5 = NULL
+````
+
+
+
+b. Create mat, which is data_bmi as a matrix, using as.matrix. 
+````{r}
+mat <- as.matrix(data_bmi)
+````
+
+
+
+c. Try to extract AGE from mat using the $. What happened? 
+````{r}
+mat$AGE
+````
+
+
+
+d. Extract AGE from mat using the [,] notation.
+````{r}
+mat[,"AGE"]
+````
+
+
+ 
+# Chapter 3. Probability, random variables, distributions
+
+## 3.1 Experiments 
+
+"....An experiment is the process of data collection for a target population according to a specific sampling protocol that includes rules for what, when, where, and how to collect data on experimental units (e.g. individuals) from the target population...."
+
+Consider the outcome of an experiment such as: 
+
+* a collection of measurements from a sampled population 
+* measurements from a laboratory experiment 
+* the result of a clinical trial 
+* the results of a simulated (computer) experiment 
+* values from hospital records sampled retrospectively
+
+
+
+## 3.1.1 Notation
+
+To develop these concepts rigorously, we will introduce some notation for the experiment setup. 
+* The sample space Ω is the collection of possible outcomes of an experiment Example: a six-sided die roll = {1; 2; 3; 4; 5; 6}, a coin flip = {heads; tails} 
+* An event, say E, is a subset of Ω Example: die roll is even E = {2; 4; 6} 
+* An elementary or simple event is a particular result of an experiment Example: die roll is a four, ω = 4 
+* ∅ is called the null event or the empty set
+
+"....Biostatis- tics is concerned with extracting useful, actionable information from complex outcomes that can result from even the simplest experiments...."
+
+
+
+3.1.2 Interpretation of set operations 
+"....Data analysis, manipulation, and tabulation are intrinsically related to data sets and logic operators. 
+Indeed, we often try to understand the structure of the data and that requires understanding how to subset the data and how to quantify the various relationships between subsets of the data. To better understand this, we need to introduce the theoretical set operations and their interpretations...." 
+
+* ω ∈ E implies that E occurs when ω occurs 
+* ω ∈/E implies that E does not occur when ω occurs 
+* E ⊂ F implies that the occurrence of E implies the occurrence of F (E is a subset of F ) 
+* E ∩ F implies the event that both E and F occur (intersection) 
+* E ∪ F implies the event that at least one of E or F occur (union) 
+* E ∩ F = ∅ means that E and F are mutually exclusive/disjoint, or cannot both occur 
+* E c or Ē is the event that E does not occur, also referred to as the com- plement
+* E \ F = E ∩ F c is the event that E occurs and F does not occur
+
+
+3.1.3 Set theory facts 
+
+DeMorgan’s laws. 
+
+* (A ∪ B)^c^ = Ac ∩ B^c^
+* (A ∩ B)^c^ = Ac ∪ B^c^
+* (A^c^)^c^ = A 
+* (A ∪ B) \ C = (A \ C) ∪ (B \ C) where \ means “set minus”
+
+
+"...Proving the equality of two sets, A = B, is done by showing that every element of A is in B (i.e., A ⊂ B) and every element in B is in A (i.e., B ⊂ A)...."
+
+"....In general, set operations are based on logical operators: AND (in R &), OR (in R | ), NOT (in R !). These logical operators can be combined and can produce complex combinations that are extremely useful in practice. For example, hav- ing a data set one may want to focus on a subset that contains only African American men from age 65 to 75 who are non-smokers. This phrase can im- mediately be translated into logical operators and the data can be extracted using R programming. This is a routine application of set theory that will be- come indispensable in practice (below we provide an example of exactly how to proceed). 
+
+"....We start by reading a small data set. First, let us tell R where the file is: 
+The data are loaded using the read.table function We specify arguments/options to read.table that the file contains a header row (header = TRUE) and we do not want to convert strings/words to a categorical variable/factor when the data are read in (stringsAsFactors = FALSE)....We can simply write the object name out to show the data (here the entire data set is displayed because it is small)...." 
+
+````{r}
+file_name = file.path("Example_Data/bmi_age.txt")
+data_bmi = read.table(file = file_name, header = TRUE, stringsAsFactors = FALSE)
+data_bmi #show the data
+dim(data_bmi) #display the dimension of the data
+colnames(data_bmi) #the name of the variables (column names):
+mean(data_bmi$BMI)  
+sd(data_bmi$BMI) #standard deviation
+
+````
+
+
+
+For simplicity, assign all the columns of the dataset to their own separate variables using the attach function. We do not recommend this approach in general, especially when multiple datasets
 
