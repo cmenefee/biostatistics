@@ -396,7 +396,12 @@ df$x
 b. Extract the column x using the [,] notation.
 ````{r}
 df = dplyr::data_frame(x = rnorm(10), y = rnorm(10), z = rnorm(10)) 
-df["x"]
+df[,"x"]
+
+
+
+
+
 
 ````
 
@@ -410,9 +415,48 @@ df[c("x", "y")]
 d. Extract the third and fifth rows of df and columns z and y.
 ````{r}
 df = dplyr::data_frame(x = rnorm(10), y = rnorm(10), z = rnorm(10)) 
-
+df[c(3,5),]
+df[c("x","y")]
 ````
 
 
 
+
+Problem 6
+a. Get the mean of the column x using the $ operator. 
+
+````{r}
+df = dplyr::data_frame(x = rnorm(10), y = rnorm(10), z = rnorm(10))
+mean(df$x)
+
+
+
+````
+
+
+b. Pipe (%>%) the column x into the mean function. 
+
+````{r}
+library(dplyr)
+df$x %>% mean
+
+````
+
+c. Look at the summarize function to look ahead to future chapters and try to do this in the dplyr framework.
+
+````{r}
+print(paste("K"))
+````
+
+Problem 7.
+Consider the data set data_bmi using the BMI data, but read in using readr: 
+
+````{r}
+file_name = "Example_Data/bmi_age.txt"
+data_bmi = readr::read_table2(file = file_name) 
+````
+a. What is the class of data_bmi? 
+b. What is the class of data_bmi[, "AGE"]? 
+c. What is the class of data_bmi$AGE? 
+d. What is the class of data_bmi[, "AGE", drop = TRUE]?
 
