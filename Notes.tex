@@ -1,0 +1,2248 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={R Notebook},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{R Notebook}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{}
+    \preauthor{}\postauthor{}
+    \date{}
+    \predate{}\postdate{}
+  
+
+\begin{document}
+\maketitle
+
+\hypertarget{project-details}{%
+\section{Project Details}\label{project-details}}
+
+\hypertarget{the-book}{%
+\subsection{The Book}\label{the-book}}
+
+Methods in Biostatistics with R Ciprian Crainiceanu, Brian Caffo, John
+Muschelli
+
+\begin{itemize}
+\tightlist
+\item
+  Intro Video: \url{https://www.youtube.com/watch?v=MG1lZhixbS4}
+\item
+  Site: \url{https://leanpub.com/biostatmethods}
+\end{itemize}
+
+\hypertarget{the-data}{%
+\subsection{The Data}\label{the-data}}
+
+From the Book
+
+\begin{itemize}
+\tightlist
+\item
+  \url{https://github.com/muschellij2/biostatmethods}
+\end{itemize}
+
+\hypertarget{chapter-1.-introduction}{%
+\section{Chapter 1. Introduction}\label{chapter-1.-introduction}}
+
+``\ldots{}.We provide a modern look at introductory biostatistical
+concepts and associated computational tools, reflecting the latest
+developments in computation and vi- sualization using the R language
+environment (R Core Team 2016). The idea is to offer a complete, online,
+live book that evolves with the newest developments and is continuously
+enriched by additional concepts\ldots{}''
+
+1.1 Biostatistics
+
+``\ldots{}.Biostatistics is the theory and methodology for the
+acquisition and use of quantitative evidence in biomedical research.
+Biostatisticians develop innovative designs and analytic methods
+targeted at increasing available information, improving the relevance
+and validity of statistical analyses, making best use of available
+information and communicating relevant uncertainties\ldots{}.''
+
+``\ldots{}.Biostatistics is a challenging subject to master if one is
+interested in understanding both the underlying concepts and their
+appropriate implementation. \ldots{}.Biostatistics can be viewed as a
+powerful and practical philosophy of science, in which the scientific
+hypothesis, the experiment, the data, the model, and the associated
+inference form the basis of scientific progress. \ldots{}.Biostatistics
+is hard because it is focused on solving difficult problems using simple
+approaches and simplicity is difficult to achieve in complex scenarios.
+\ldots{}.Biostatistics is not hard in the usual sense that it requires
+either deep mathematical concepts or committing large books to
+memory\ldots{}.''
+
+``\ldots{}.The difficulty of biostatistics rests in the different
+philosophy, the different way of thinking, and the different set of
+skills required to process human communication of scientific problems
+and their translation into well-defined problems that can be solved with
+data. Once a scientific promlem is defined, the biostatistics philosophy
+is to try to solve it using the simplest possible approaches that are
+not too simplistic. Thus, parsimony and inductive reasoning are
+fundamental concepts in biostatistics\ldots{}.''
+
+``\ldots{}.biostatistics starts with the current accepted state of
+knowledge (the collection of null hypotheses) and uses data to
+inductively refute or reinforce parts of the knowledge or generate new
+potential knowledge (new null hypotheses). In the biostatistical
+philosophy there is no truth, just the state of current
+knowledge\ldots{}.''
+
+``\ldots{}.Biostatistics requires: (1) a tight coupling of the
+biostatistical methods with ethical and scientific goals of research;
+(2) an emphasis on the scientific interpretation of statistical evidence
+to impact policy; and (3) a detailed acknowledgment of assumptions and a
+comprehensive evaluation of the robustness of conclusions to these
+assumptions\ldots{}.''
+
+\hypertarget{chapter-2.-introduction-to-r}{%
+\section{Chapter 2. Introduction to
+R}\label{chapter-2.-introduction-to-r}}
+
+\hypertarget{objects-in-r}{%
+\subsection{2.4 Objects In R}\label{objects-in-r}}
+
+``\ldots{}.Almost everything is an ``object'' or
+``variable.''\ldots{}.most things are relevant only with respect to a
+data set\ldots{}."
+
+\hypertarget{assignment}{%
+\subsection{2.5 Assignment}\label{assignment}}
+
+``\ldots{}.There is also a ``forward assignment'' operator that exists,
+but this is rarely used and we do not recommend using it\ldots{}." Oh
+no.
+
+\hypertarget{data-types-in-r}{%
+\subsection{2.6 Data types In R}\label{data-types-in-r}}
+
+``\ldots{}.The three most fundamental: numeric (numbers), character
+(strings or ``words''), and logicals (TRUE or FALSE).
+
+``\ldots{}.One additional data type: factors. Factors are categorical
+data types. The categories of a factor are called the ``levels'' of that
+factor. The levels of factors usually contain human-readable levels
+(e.g., ``Male'' and ``Female''). Factors become increasingly useful when
+we fit models, as one can define the baseline category by the levels of
+the factor, which affects the interpretation of coefficients. Some refer
+to vectors of length 1 as a ``scalar''. In other languages, there is a
+distinction between scalars and vectors, but not in R. So you can think
+of a vector as a 1-dimensional object that can have anywhere from 0 to a
+large number of elements\ldots{}."
+
+\hypertarget{more-than-one-number-vectors-in-r}{%
+\subsection{2.7.1 More than one number: vectors In
+R}\label{more-than-one-number-vectors-in-r}}
+
+``\ldots{}.Anything having one dimension is generally referred to as a
+``vector''. A vector has a specified length. Technically, a vector may
+have length 0, which means nothing is in it. But usually vectors have
+one or multiple objects in them. Those objects all must have the same
+data type (e.g., all numbers or all characters or all
+logicals)\ldots{}."
+
+\hypertarget{sequences}{%
+\subsection{2.7.3 Sequences}\label{sequences}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1}\OperatorTok{:}\DecValTok{5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2 3 4 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{-5}\OperatorTok{:}\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -5 -4 -3 -2 -1  0  1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OperatorTok{-}\NormalTok{(}\DecValTok{5}\OperatorTok{:}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -5 -4 -3 -2 -1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2 3 4 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{7}\NormalTok{, }\DataTypeTok{by =} \FloatTok{0.4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 1.0 1.4 1.8 2.2 2.6 3.0 3.4 3.8 4.2 4.6 5.0 5.4 5.8 6.2 6.6 7.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{seq}\NormalTok{(}\DataTypeTok{by =} \FloatTok{0.4}\NormalTok{, }\DataTypeTok{to =} \DecValTok{7}\NormalTok{, }\DataTypeTok{from =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 1.0 1.4 1.8 2.2 2.6 3.0 3.4 3.8 4.2 4.6 5.0 5.4 5.8 6.2 6.6 7.0
+\end{verbatim}
+
+\hypertarget{operations-on-numeric-vectors}{%
+\subsection{2.7.4 Operations on numeric
+vectors}\label{operations-on-numeric-vectors}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x_length_}\DecValTok{2}\NormalTok{ =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{) }
+\NormalTok{x_length_}\DecValTok{2} \OperatorTok{*}\StringTok{ }\DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3 6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sqrt}\NormalTok{(x_length_}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.000000 1.414214
+\end{verbatim}
+
+\hypertarget{some-standard-operations-on-vectors}{%
+\subsection{2.7.5 Some standard operations on
+vectors}\label{some-standard-operations-on-vectors}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x_length_}\DecValTok{3}\NormalTok{ =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{)}
+\KeywordTok{length}\NormalTok{(x_length_}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{)}
+\KeywordTok{sort}\NormalTok{(}\KeywordTok{unique}\NormalTok{(x))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sample}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4 1 2 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sample}\NormalTok{(x, }\DataTypeTok{size =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# sample(x, size = 10) will error }
+\KeywordTok{sample}\NormalTok{(x, }\DataTypeTok{size =} \DecValTok{10}\NormalTok{, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 1 2 4 1 4 2 4 2 1 1
+\end{verbatim}
+
+\hypertarget{data-type-coercion}{%
+\subsection{2.7.7 Data type coercion}\label{data-type-coercion}}
+
+``\ldots{}.Vectors can only have one data type in them\ldots{}.''
+
+``\ldots{}.Logicals can be coerced to numerics (0 and 1 values) and
+coerced to characters (''TRUE" and ``FALSE'', note the quotes). Numerics
+can be coerced into characters (5.6 changes to ``5.6'')\ldots{}."
+
+You can determine the data type of an object with the typeof() function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{typeof}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\FloatTok{5.2}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "double"
+\end{verbatim}
+
+\hypertarget{more-than-one-dimension-matrices}{%
+\subsection{2.7.8 More than one dimension:
+Matrices}\label{more-than-one-dimension-matrices}}
+
+``\ldots{}.A matrix is like a vector, but it has two dimensions, rows
+and columns. Like vectors, matrices can contain only one data
+type\ldots{}.'' So I imagine a vector is just `A row' and a matrix is `A
+row and a column', or something like that
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{matrix}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]
+## [1,]    1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{matrix}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{6}\NormalTok{, }\DataTypeTok{nrow =} \DecValTok{2}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{matrix}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{6}\NormalTok{, }\DataTypeTok{nrow =} \DecValTok{2}\NormalTok{, }\DataTypeTok{ncol =} \DecValTok{3}\NormalTok{, }\DataTypeTok{byrow =} \OtherTok{TRUE}\NormalTok{) }\CommentTok{# filled by row}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]    4    5    6
+\end{verbatim}
+
+\hypertarget{more-than-one-dimension-data.frames}{%
+\subsection{2.7.9 More than one dimension:
+data.frames}\label{more-than-one-dimension-data.frames}}
+
+``\ldots{}.A data.frame is like a matrix in that it has rows and
+columns. A data.frame can have columns of different data
+types\ldots{}.''
+
+\ldots{}.Note, a default on the data.frame() function is
+stringsAsFactors = TRUE, which indicates that all strings should be
+converted to factors. Many times, you want to clean these columns and
+then convert them to factors directly. So we will set that option to
+FALSE\ldots{}."
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{age =} \KeywordTok{c}\NormalTok{(}\DecValTok{25}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{32}\NormalTok{, }\DecValTok{42}\NormalTok{), }
+                \DataTypeTok{handed =} \KeywordTok{c}\NormalTok{(}\StringTok{"left"}\NormalTok{, }\StringTok{"right"}\NormalTok{, }\StringTok{"ambidextrous"}\NormalTok{, }\StringTok{"left"}\NormalTok{), }
+                \DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{dimensions-of-an-object}{%
+\subsection{2.7.10 Dimensions of an
+object}\label{dimensions-of-an-object}}
+
+There are functions that get attributes about a matrix/data.frame that
+are useful for analysis.
+
+The dim function returns the dimensions (rows and columns, respectively)
+of a data set:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{age =} \KeywordTok{c}\NormalTok{(}\DecValTok{25}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{32}\NormalTok{, }\DecValTok{42}\NormalTok{), }
+                \DataTypeTok{handed =} \KeywordTok{c}\NormalTok{(}\StringTok{"left"}\NormalTok{, }\StringTok{"right"}\NormalTok{, }\StringTok{"ambidextrous"}\NormalTok{, }\StringTok{"left"}\NormalTok{), }
+                \DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{dim}\NormalTok{(df) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4 2
+\end{verbatim}
+
+Number of rows or columns
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df =}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{age =} \KeywordTok{c}\NormalTok{(}\DecValTok{25}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{32}\NormalTok{, }\DecValTok{42}\NormalTok{), }
+                \DataTypeTok{handed =} \KeywordTok{c}\NormalTok{(}\StringTok{"left"}\NormalTok{, }\StringTok{"right"}\NormalTok{, }\StringTok{"ambidextrous"}\NormalTok{, }\StringTok{"left"}\NormalTok{), }
+                \DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
+\KeywordTok{nrow}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ncol}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\hypertarget{logical-operations}{%
+\subsection{2.8 Logical operations}\label{logical-operations}}
+
+``\ldots{}.Perform some logical tests that return logical data.
+greater/less than (\textgreater{}, \textless{}) greater/less than or
+equal to (\textgreater{}=, \textless{}=) equal to (== ``double equals'')
+and not equal to (!=) These are called ``relational operators'' or
+``comparison operators''
+
+There are also the standard ``logical operators'': not/negate (!), AND
+(\&), and OR (\textbar{})\ldots{}."
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{) }
+\NormalTok{x }\OperatorTok{<}\StringTok{ }\DecValTok{4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  TRUE  TRUE FALSE FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{>}\StringTok{ }\DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE FALSE  TRUE  TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{>=}\StringTok{ }\DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE  TRUE  TRUE  TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{==}\StringTok{ }\DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE  TRUE FALSE FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{!=}\StringTok{ }\DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  TRUE FALSE  TRUE  TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{) }
+\NormalTok{x }\OperatorTok{>}\StringTok{ }\DecValTok{3} \OperatorTok{|}\StringTok{ }\NormalTok{x }\OperatorTok{==}\StringTok{ }\DecValTok{1} 
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  TRUE FALSE  TRUE  TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\OperatorTok{!}\NormalTok{(x }\OperatorTok{>}\StringTok{ }\DecValTok{3} \OperatorTok{|}\StringTok{ }\NormalTok{x }\OperatorTok{==}\StringTok{ }\DecValTok{1}\NormalTok{) }\CommentTok{# negates the statement - turns TRUE to FALSE [1] FALSE TRUE FALSE FALSE }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE  TRUE FALSE FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{!=}\StringTok{ }\DecValTok{3} \OperatorTok{&}\StringTok{ }\NormalTok{x }\OperatorTok{!=}\StringTok{ }\DecValTok{5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  TRUE FALSE  TRUE FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{==}\StringTok{ }\DecValTok{3} \OperatorTok{|}\StringTok{ }\NormalTok{x }\OperatorTok{==}\StringTok{ }\DecValTok{4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE  TRUE  TRUE FALSE
+\end{verbatim}
+
+\hypertarget{the-in-operator}{%
+\subsection{2.8.1 The \%in\% Operator}\label{the-in-operator}}
+
+``\ldots{}.Many times, we want to keep or exclude based on a number of
+values\ldots{}.''
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{) }
+\NormalTok{x }\OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE  TRUE  TRUE FALSE
+\end{verbatim}
+
+This feels like an ``is in?'' or may even an ``is?'' in that it asks:
+``are any of these values in the vector?''.
+
+\hypertarget{subsetting-2.9.1-subsetting-vectors}{%
+\subsection{2.9 Subsetting 2.9.1 Subsetting
+vectors}\label{subsetting-2.9.1-subsetting-vectors}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{x[}\DecValTok{4}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{>}\StringTok{ }\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE  TRUE  TRUE  TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x[ x }\OperatorTok{>}\StringTok{ }\DecValTok{2}\NormalTok{ ]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3 4 5
+\end{verbatim}
+
+\hypertarget{subsetting-matrices}{%
+\subsection{2.9.2 Subsetting matrices}\label{subsetting-matrices}}
+
+``\ldots{}.the syntax is {[}row subset, column subset{]}\ldots{}.''
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat =}\StringTok{ }\KeywordTok{matrix}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{6}\NormalTok{, }\DataTypeTok{nrow =} \DecValTok{2}\NormalTok{)}
+\NormalTok{mat[}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat[}\DecValTok{1}\NormalTok{, }\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat[}\DecValTok{1}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\OtherTok{FALSE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat[, }\KeywordTok{c}\NormalTok{(}\OtherTok{FALSE}\NormalTok{, }\DecValTok{3}\NormalTok{, }\OtherTok{TRUE}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2]
+## [1,]    5    1
+## [2,]    6    2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat[}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{, ]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat[, }\DecValTok{2}\OperatorTok{:}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2]
+## [1,]    3    5
+## [2,]    4    6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat[, }\KeywordTok{c}\NormalTok{(}\OtherTok{FALSE}\NormalTok{, }\OtherTok{TRUE}\NormalTok{, }\OtherTok{FALSE}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3 4
+\end{verbatim}
+
+``\ldots{}.You can ensure that the result is a matrix, even if the
+result is one-dimensional using the drop = FALSE argument\ldots{}.''
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat[,}\DecValTok{1}\NormalTok{, drop =}\StringTok{ }\OtherTok{FALSE}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]
+## [1,]    1
+## [2,]    2
+\end{verbatim}
+
+\hypertarget{tibbles}{%
+\subsection{2.12.1 Tibbles}\label{tibbles}}
+
+Implemented in the tibble package. It is like a data.frame
+
+\begin{itemize}
+\tightlist
+\item
+  Never coerces inputs (i.e.~strings stay as strings!).
+\item
+  Never adds row.names.
+\item
+  Never changes column names.
+\item
+  Only recycles length 1 inputs. (no wraparound)
+\item
+  Automatically adds column names.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tbl =}\StringTok{ }\NormalTok{tibble}\OperatorTok{::}\KeywordTok{as_tibble}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{problems}{%
+\subsection{2.13 Problems}\label{problems}}
+
+\hypertarget{problem-1.-consider-the-vector-num---c1.5-2-8.4}{%
+\subsubsection{Problem 1. Consider the vector: num \textless{}-
+c(``1.5'', ``2'',
+``8.4'')}\label{problem-1.-consider-the-vector-num---c1.5-2-8.4}}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  Convert num into a numeric vector using as.numeric
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{num <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"1.5"}\NormalTok{, }\StringTok{"2"}\NormalTok{, }\StringTok{"8.4"}\NormalTok{)}
+\KeywordTok{as.numeric}\NormalTok{(num)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.5 2.0 8.4
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Convert num into a factor using factor, calling it num\_fac.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{num <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"1.5"}\NormalTok{, }\StringTok{"2"}\NormalTok{, }\StringTok{"8.4"}\NormalTok{)}
+\NormalTok{num_fac <-}\StringTok{ }\KeywordTok{factor}\NormalTok{(num)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Convert num\_fac into a numeric using as.numeric.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{as.numeric}\NormalTok{(num_fac)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2 3
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Convert num\_fac into a numeric using as.numeric(as.character())
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(num_fac))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.5 2.0 8.4
+\end{verbatim}
+
+\hypertarget{problem-2.-consider-the-vector-num---c0-1-1-0}{%
+\subsubsection{Problem 2. Consider the vector: num \textless{}- c(0, 1,
+1, 0)}\label{problem-2.-consider-the-vector-num---c0-1-1-0}}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  Append TRUE to the num vector using c.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{num <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{) }
+\NormalTok{num <-}\StringTok{ }\KeywordTok{c}\NormalTok{(num, }\OtherTok{TRUE}\NormalTok{)}
+\NormalTok{num}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0 1 1 0 1
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Check the class of num using class.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{num <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{) }
+\KeywordTok{class}\NormalTok{(num)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Convert num into a logical vector using as.logical.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{num <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{) }
+\KeywordTok{as.logical}\NormalTok{(num)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE  TRUE  TRUE FALSE
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Convert num into a logical vector where the result is TRUE if num is
+  0, using the == operator.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{num <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{) }
+\KeywordTok{as.logical}\NormalTok{(num }\OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  TRUE FALSE FALSE  TRUE
+\end{verbatim}
+
+\hypertarget{problem-3.-consider-the-data-set-data_bmi-from-above.-perform-the-following-operations}{%
+\subsubsection{Problem 3. Consider the data set data\_bmi from above.
+Perform the following
+operations:}\label{problem-3.-consider-the-data-set-data_bmi-from-above.-perform-the-following-operations}}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  Extract the column nams of data\_bmi using the colnames() function.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file_name =}\StringTok{ }\KeywordTok{file.path}\NormalTok{(}\StringTok{"Example_Data/bmi_age.txt"}\NormalTok{)}
+\NormalTok{data_bmi =}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ file_name, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{) }\CommentTok{# found elsewhere in the book. Downloaded from the repository}
+\KeywordTok{colnames}\NormalTok{(data_bmi)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "PID" "BMI" "SEX" "AGE"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Subset the AGE column using data\_bmi{[}, ``AGE''{]}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file_name =}\StringTok{ }\KeywordTok{file.path}\NormalTok{(}\StringTok{"Example_Data/bmi_age.txt"}\NormalTok{)}
+\NormalTok{data_bmi =}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ file_name, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
+\NormalTok{data_bmi[, }\StringTok{"AGE"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 45 57 66 49 33 40 65 59 65 42
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Subset the AGE column using data\_bmi\$AGE.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file_name =}\StringTok{ }\KeywordTok{file.path}\NormalTok{(}\StringTok{"Example_Data/bmi_age.txt"}\NormalTok{)}
+\NormalTok{data_bmi =}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ file_name, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
+\NormalTok{data_bmi}\OperatorTok{$}\NormalTok{AGE}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 45 57 66 49 33 40 65 59 65 42
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Subset the AGE and BMI columns using brackets and the c() function.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file_name =}\StringTok{ }\KeywordTok{file.path}\NormalTok{(}\StringTok{"Example_Data/bmi_age.txt"}\NormalTok{)}
+\NormalTok{data_bmi =}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ file_name, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
+\NormalTok{data_bmi[}\KeywordTok{c}\NormalTok{(}\StringTok{"AGE"}\NormalTok{, }\StringTok{"BMI"}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    AGE BMI
+## 1   45  22
+## 2   57  27
+## 3   66  31
+## 4   49  24
+## 5   33  23
+## 6   40  18
+## 7   65  21
+## 8   59  26
+## 9   65  34
+## 10  42  20
+\end{verbatim}
+
+\hypertarget{problem-4.-here-we-will-work-with-sequences-and-lengths}{%
+\subsubsection{Problem 4. Here we will work with sequences and
+lengths:}\label{problem-4.-here-we-will-work-with-sequences-and-lengths}}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  Create a sequence from 1 to 4.5 by 0.24. Call this run\_num.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{run_num <-}\KeywordTok{seq}\NormalTok{(}\DataTypeTok{from =} \DecValTok{1}\NormalTok{, }\DataTypeTok{to =} \FloatTok{4.5}\NormalTok{, }\DataTypeTok{by =} \FloatTok{0.24}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  What is the length of run\_num.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(run_num)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 15
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Extract the fifth element of run\_num using brackets.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{run_num[}\DecValTok{5}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.96
+\end{verbatim}
+
+\hypertarget{problem-5.-lets-create-a-tibble-called-df}{%
+\subsubsection{Problem 5. Let's create a tibble called
+df:}\label{problem-5.-lets-create-a-tibble-called-df}}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  Extract the column x using the \$.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df =}\StringTok{ }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{data_frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{), }\DataTypeTok{y =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{), }\DataTypeTok{z =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{)) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: `data_frame()` is deprecated, use `tibble()`.
+## This warning is displayed once per session.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df}\OperatorTok{$}\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] -0.81850582  0.94564409  2.04209952  0.98579815 -0.65734723
+##  [6]  0.89545332 -0.68871295 -0.47146923  0.04913984  0.78580341
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Extract the column x using the {[},{]} notation.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df =}\StringTok{ }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{data_frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{), }\DataTypeTok{y =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{), }\DataTypeTok{z =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{)) }
+\NormalTok{df[,}\StringTok{"x"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 10 x 1
+##         x
+##     <dbl>
+##  1 -1.91 
+##  2  1.50 
+##  3 -2.29 
+##  4  0.663
+##  5  0.745
+##  6 -0.913
+##  7  0.455
+##  8  1.17 
+##  9  0.310
+## 10 -1.57
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Extract columns x and z.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df =}\StringTok{ }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{data_frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{), }\DataTypeTok{y =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{), }\DataTypeTok{z =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{)) }
+\NormalTok{df[}\KeywordTok{c}\NormalTok{(}\StringTok{"x"}\NormalTok{, }\StringTok{"y"}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 10 x 2
+##         x      y
+##     <dbl>  <dbl>
+##  1 -1.41   0.986
+##  2  1.31  -0.414
+##  3  1.19   0.400
+##  4  0.752 -0.313
+##  5 -1.04  -0.500
+##  6 -1.18   0.930
+##  7 -0.540  0.338
+##  8 -0.632 -1.84 
+##  9  1.51   0.496
+## 10  1.42   0.755
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Extract the third and fifth rows of df and columns z and y.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df =}\StringTok{ }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{data_frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{), }\DataTypeTok{y =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{), }\DataTypeTok{z =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{)) }
+\NormalTok{df[}\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{),]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 3
+##        x      y      z
+##    <dbl>  <dbl>  <dbl>
+## 1 -0.200  0.250  0.810
+## 2 -0.523 -0.194 -2.54
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df[}\KeywordTok{c}\NormalTok{(}\StringTok{"x"}\NormalTok{,}\StringTok{"y"}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 10 x 2
+##          x       y
+##      <dbl>   <dbl>
+##  1  0.117  -0.0960
+##  2  0.264   2.46  
+##  3 -0.200   0.250 
+##  4  1.41   -0.831 
+##  5 -0.523  -0.194 
+##  6  2.24    2.70  
+##  7 -0.0119  0.0583
+##  8  1.16    1.06  
+##  9  0.195   0.244 
+## 10  0.854  -0.348
+\end{verbatim}
+
+\hypertarget{problem-6}{%
+\subsubsection{Problem 6}\label{problem-6}}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  Get the mean of the column x using the \$ operator.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df =}\StringTok{ }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{data_frame}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{), }\DataTypeTok{y =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{), }\DataTypeTok{z =} \KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{))}
+\KeywordTok{mean}\NormalTok{(df}\OperatorTok{$}\NormalTok{x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.2418342
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Pipe (\%\textgreater{}\%) the column x into the mean function.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df}\OperatorTok{$}\NormalTok{x }\OperatorTok{%>%}\StringTok{ }\NormalTok{mean}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -0.2418342
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Look at the summarize function to look ahead to future chapters and
+  try to do this in the dplyr framework.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(}\StringTok{"K"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "K"
+\end{verbatim}
+
+\hypertarget{problem-7.}{%
+\subsubsection{Problem 7.}\label{problem-7.}}
+
+Consider the data set data\_bmi using the BMI data, but read in using
+readr:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file_name =}\StringTok{ "Example_Data/bmi_age.txt"}
+\NormalTok{data_bmi =}\StringTok{ }\NormalTok{readr}\OperatorTok{::}\KeywordTok{read_table2}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ file_name) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Missing column names filled in: 'X5' [5]
+\end{verbatim}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   PID = col_double(),
+##   BMI = col_double(),
+##   SEX = col_double(),
+##   AGE = col_double(),
+##   X5 = col_logical()
+## )
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: 3 parsing failures.
+## row col  expected    actual                       file
+##   2  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+##   3  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+##  10  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  What is the class of data\_bmi?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file_name =}\StringTok{ "Example_Data/bmi_age.txt"}
+\NormalTok{data_bmi =}\StringTok{ }\NormalTok{readr}\OperatorTok{::}\KeywordTok{read_table2}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ file_name)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Missing column names filled in: 'X5' [5]
+\end{verbatim}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   PID = col_double(),
+##   BMI = col_double(),
+##   SEX = col_double(),
+##   AGE = col_double(),
+##   X5 = col_logical()
+## )
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: 3 parsing failures.
+## row col  expected    actual                       file
+##   2  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+##   3  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+##  10  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(data_bmi)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  What is the class of data\_bmi{[}, ``AGE''{]}?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file_name =}\StringTok{ "Example_Data/bmi_age.txt"}
+\NormalTok{data_bmi =}\StringTok{ }\NormalTok{readr}\OperatorTok{::}\KeywordTok{read_table2}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ file_name)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Missing column names filled in: 'X5' [5]
+\end{verbatim}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   PID = col_double(),
+##   BMI = col_double(),
+##   SEX = col_double(),
+##   AGE = col_double(),
+##   X5 = col_logical()
+## )
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: 3 parsing failures.
+## row col  expected    actual                       file
+##   2  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+##   3  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+##  10  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(data_bmi[, }\StringTok{"AGE"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "tbl_df"     "tbl"        "data.frame"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  What is the class of data\_bmi\$AGE?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file_name =}\StringTok{ "Example_Data/bmi_age.txt"}
+\NormalTok{data_bmi =}\StringTok{ }\NormalTok{readr}\OperatorTok{::}\KeywordTok{read_table2}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ file_name)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Missing column names filled in: 'X5' [5]
+\end{verbatim}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   PID = col_double(),
+##   BMI = col_double(),
+##   SEX = col_double(),
+##   AGE = col_double(),
+##   X5 = col_logical()
+## )
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: 3 parsing failures.
+## row col  expected    actual                       file
+##   2  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+##   3  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+##  10  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(data_bmi}\OperatorTok{$}\NormalTok{AGE)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  What is the class of data\_bmi{[}, ``AGE'', drop = TRUE{]}?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file_name =}\StringTok{ "Example_Data/bmi_age.txt"}
+\NormalTok{data_bmi =}\StringTok{ }\NormalTok{readr}\OperatorTok{::}\KeywordTok{read_table2}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ file_name)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Missing column names filled in: 'X5' [5]
+\end{verbatim}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   PID = col_double(),
+##   BMI = col_double(),
+##   SEX = col_double(),
+##   AGE = col_double(),
+##   X5 = col_logical()
+## )
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: 3 parsing failures.
+## row col  expected    actual                       file
+##   2  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+##   3  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+##  10  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(data_bmi[, }\StringTok{"AGE"}\NormalTok{, }\DataTypeTok{drop =} \OtherTok{TRUE}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "numeric"
+\end{verbatim}
+
+\hypertarget{problem-8.-consider-the-data-set-data_bmi-using-the-bmi-data-but-read-in-using-readr}{%
+\subsubsection{Problem 8. Consider the data set data\_bmi using the BMI
+data, but read in using
+readr:}\label{problem-8.-consider-the-data-set-data_bmi-using-the-bmi-data-but-read-in-using-readr}}
+
+file\_name = ``bmi\_age.txt'' data\_bmi = readr::read\_table2(file =
+file\_name) Parsed with column specification:
+
+cols( PID = col\_double(), BMI = col\_double(), SEX = col\_double(), AGE
+= col\_double() )
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  What is the mean of the AGE column?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file_name =}\StringTok{ "Example_Data/bmi_age.txt"}
+\NormalTok{data_bmi =}\StringTok{ }\NormalTok{readr}\OperatorTok{::}\KeywordTok{read_table2}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ file_name)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Missing column names filled in: 'X5' [5]
+\end{verbatim}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   PID = col_double(),
+##   BMI = col_double(),
+##   SEX = col_double(),
+##   AGE = col_double(),
+##   X5 = col_logical()
+## )
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: 3 parsing failures.
+## row col  expected    actual                       file
+##   2  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+##   3  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+##  10  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(data_bmi}\OperatorTok{$}\NormalTok{AGE)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 52.1
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Set the 3rd element of data\_bmi\$AGE to be 42?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file_name =}\StringTok{ "Example_Data/bmi_age.txt"}
+\NormalTok{data_bmi =}\StringTok{ }\NormalTok{readr}\OperatorTok{::}\KeywordTok{read_table2}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ file_name)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Missing column names filled in: 'X5' [5]
+\end{verbatim}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   PID = col_double(),
+##   BMI = col_double(),
+##   SEX = col_double(),
+##   AGE = col_double(),
+##   X5 = col_logical()
+## )
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: 3 parsing failures.
+## row col  expected    actual                       file
+##   2  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+##   3  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+##  10  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data_bmi}\OperatorTok{$}\NormalTok{AGE[}\DecValTok{3}\NormalTok{] =}\StringTok{ }\DecValTok{42}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  What is the mean of the AGE column now?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file_name =}\StringTok{ "Example_Data/bmi_age.txt"}
+\NormalTok{data_bmi =}\StringTok{ }\NormalTok{readr}\OperatorTok{::}\KeywordTok{read_table2}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ file_name)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Missing column names filled in: 'X5' [5]
+\end{verbatim}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   PID = col_double(),
+##   BMI = col_double(),
+##   SEX = col_double(),
+##   AGE = col_double(),
+##   X5 = col_logical()
+## )
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: 3 parsing failures.
+## row col  expected    actual                       file
+##   2  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+##   3  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+##  10  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(data_bmi}\OperatorTok{$}\NormalTok{AGE)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 52.1
+\end{verbatim}
+
+\hypertarget{problem-9.-use-data_bmi-from-the-above-problem}{%
+\subsubsection{Problem 9. Use data\_bmi from the above
+problem:}\label{problem-9.-use-data_bmi-from-the-above-problem}}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  Remove the X5 column using data\_bmi\$X5 = NULL
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file_name =}\StringTok{ "Example_Data/bmi_age.txt"}
+\NormalTok{data_bmi =}\StringTok{ }\NormalTok{readr}\OperatorTok{::}\KeywordTok{read_table2}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ file_name)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Missing column names filled in: 'X5' [5]
+\end{verbatim}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   PID = col_double(),
+##   BMI = col_double(),
+##   SEX = col_double(),
+##   AGE = col_double(),
+##   X5 = col_logical()
+## )
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: 3 parsing failures.
+## row col  expected    actual                       file
+##   2  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+##   3  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+##  10  -- 5 columns 4 columns 'Example_Data/bmi_age.txt'
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data_bmi}\OperatorTok{$}\NormalTok{X5 =}\StringTok{ }\OtherTok{NULL}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Create mat, which is data\_bmi as a matrix, using as.matrix.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(data_bmi)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Try to extract AGE from mat using the \$. What happened?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#It causes a fatal error}
+\CommentTok{#mat$AGE}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Extract AGE from mat using the {[},{]} notation.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat[,}\StringTok{"AGE"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 45 57 66 49 33 40 65 59 65 42
+\end{verbatim}
+
+\hypertarget{chapter-3.-probability-random-variables-distributions}{%
+\section{Chapter 3. Probability, random variables,
+distributions}\label{chapter-3.-probability-random-variables-distributions}}
+
+\hypertarget{experiments}{%
+\subsection{3.1 Experiments}\label{experiments}}
+
+``\ldots{}.An experiment is the process of data collection for a target
+population according to a specific sampling protocol that includes rules
+for what, when, where, and how to collect data on experimental units
+(e.g.~individuals) from the target population\ldots{}.''
+
+Consider the outcome of an experiment such as:
+
+\begin{itemize}
+\tightlist
+\item
+  a collection of measurements from a sampled population
+\item
+  measurements from a laboratory experiment
+\item
+  the result of a clinical trial
+\item
+  the results of a simulated (computer) experiment
+\item
+  values from hospital records sampled retrospectively
+\end{itemize}
+
+\hypertarget{notation}{%
+\subsection{3.1.1 Notation}\label{notation}}
+
+To develop these concepts rigorously, we will introduce some notation
+for the experiment setup. * The sample space Ω is the collection of
+possible outcomes of an experiment Example: a six-sided die roll = \{1;
+2; 3; 4; 5; 6\}, a coin flip = \{heads; tails\} * An event, say E, is a
+subset of Ω Example: die roll is even E = \{2; 4; 6\} * An elementary or
+simple event is a particular result of an experiment Example: die roll
+is a four, ω = 4 * ∅ is called the null event or the empty set
+
+``\ldots{}.Biostatis- tics is concerned with extracting useful,
+actionable information from complex outcomes that can result from even
+the simplest experiments\ldots{}.''
+
+\hypertarget{interpretation-of-set-operations}{%
+\subsection{3.1.2 Interpretation of set
+operations}\label{interpretation-of-set-operations}}
+
+``\ldots{}.Data analysis, manipulation, and tabulation are intrinsically
+related to data sets and logic operators. Indeed, we often try to
+understand the structure of the data and that requires understanding how
+to subset the data and how to quantify the various relationships between
+subsets of the data. To better understand this, we need to introduce the
+theoretical set operations and their interpretations\ldots{}.''
+
+\begin{itemize}
+\tightlist
+\item
+  ω ∈ E implies that E occurs when ω occurs
+\item
+  ω ∈/E implies that E does not occur when ω occurs
+\item
+  E ⊂ F implies that the occurrence of E implies the occurrence of F (E
+  is a subset of F )
+\item
+  E ∩ F implies the event that both E and F occur (intersection)
+\item
+  E ∪ F implies the event that at least one of E or F occur (union)
+\item
+  E ∩ F = ∅ means that E and F are mutually exclusive/disjoint, or
+  cannot both occur
+\item
+  E c or Ē is the event that E does not occur, also referred to as the
+  com- plement
+\item
+  E ~F = E ∩ F c is the event that E occurs and F does not occur
+\end{itemize}
+
+\hypertarget{set-theory-facts}{%
+\subsection{3.1.3 Set theory facts}\label{set-theory-facts}}
+
+DeMorgan's laws.
+
+\begin{itemize}
+\tightlist
+\item
+  (A ∪ B)\textsuperscript{c} = Ac ∩ B\textsuperscript{c}
+\item
+  (A ∩ B)\textsuperscript{c} = Ac ∪ B\textsuperscript{c}
+\item
+  (A\textsuperscript{c})\textsuperscript{c} = A
+\item
+  (A ∪ B) ~C = (A ~C) ∪ (B ~C) where ~means ``set minus''
+\end{itemize}
+
+``\ldots{}Proving the equality of two sets, A = B, is done by showing
+that every element of A is in B (i.e., A ⊂ B) and every element in B is
+in A (i.e., B ⊂ A)\ldots{}.''
+
+"\ldots{}.In general, set operations are based on logical operators: AND
+(in R \&), OR (in R \textbar{} ), NOT (in R !). These logical operators
+can be combined and can produce complex combinations that are extremely
+useful in practice. For example, hav- ing a data set one may want to
+focus on a subset that contains only African American men from age 65 to
+75 who are non-smokers. This phrase can im- mediately be translated into
+logical operators and the data can be extracted using R programming.
+This is a routine application of set theory that will be- come
+indispensable in practice (below we provide an example of exactly how to
+proceed).
+
+``\ldots{}.We start by reading a small data set. First, let us tell R
+where the file is: The data are loaded using the read.table function We
+specify arguments/options to read.table that the file contains a header
+row (header = TRUE) and we do not want to convert strings/words to a
+categorical variable/factor when the data are read in (stringsAsFactors
+= FALSE)\ldots{}.We can simply write the object name out to show the
+data (here the entire data set is displayed because it is
+small)\ldots{}.''
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{file_name =}\StringTok{ }\KeywordTok{file.path}\NormalTok{(}\StringTok{"Example_Data/bmi_age.txt"}\NormalTok{)}
+\NormalTok{data_bmi =}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\DataTypeTok{file =}\NormalTok{ file_name, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{stringsAsFactors =} \OtherTok{FALSE}\NormalTok{)}
+\NormalTok{data_bmi }\CommentTok{#show the data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    PID BMI SEX AGE
+## 1    1  22   1  45
+## 2    2  27   0  57
+## 3    3  31   1  66
+## 4    4  24   1  49
+## 5    5  23   0  33
+## 6    6  18   0  40
+## 7    7  21   0  65
+## 8    8  26   1  59
+## 9    9  34   1  65
+## 10  10  20   0  42
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(data_bmi) }\CommentTok{#show only a portion of the data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   PID BMI SEX AGE
+## 1   1  22   1  45
+## 2   2  27   0  57
+## 3   3  31   1  66
+## 4   4  24   1  49
+## 5   5  23   0  33
+## 6   6  18   0  40
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{dim}\NormalTok{(data_bmi) }\CommentTok{#display the dimension of the data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10  4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{colnames}\NormalTok{(data_bmi) }\CommentTok{#the name of the variables (column names):}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "PID" "BMI" "SEX" "AGE"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(data_bmi}\OperatorTok{$}\NormalTok{BMI)  }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 24.6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sd}\NormalTok{(data_bmi}\OperatorTok{$}\NormalTok{BMI) }\CommentTok{#standard deviation}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4.993329
+\end{verbatim}
+
+``\ldots{}.For simplicity, assign all the columns of the dataset to
+their own separate variables using the attach function. We do not
+recommend this approach in general, especially when multiple datasets
+are being used\ldots{}.''
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{attach}\NormalTok{(data_bmi)}
+\end{Highlighting}
+\end{Shaded}
+
+A basic plot of age vs.~BMI:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(AGE, BMI,}\DataTypeTok{type=}\StringTok{"p"}\NormalTok{,}\DataTypeTok{pch=}\DecValTok{20}\NormalTok{,}\DataTypeTok{cex=}\DecValTok{2}\NormalTok{,}\DataTypeTok{col=}\StringTok{"blue"}\NormalTok{) }
+\KeywordTok{rect}\NormalTok{(}\DataTypeTok{xleft =} \DecValTok{45}\NormalTok{, }\DataTypeTok{xright =} \DecValTok{100}\NormalTok{, }\DataTypeTok{ybottom =} \DecValTok{0}\NormalTok{, }\DataTypeTok{ytop =} \DecValTok{26}\NormalTok{, }\DataTypeTok{col =}\NormalTok{ scales}\OperatorTok{::}\KeywordTok{alpha}\NormalTok{(}\StringTok{"purple"}\NormalTok{, }\FloatTok{0.5}\NormalTok{)) }
+\KeywordTok{rect}\NormalTok{(}\DataTypeTok{xleft =} \DecValTok{45}\NormalTok{, }\DataTypeTok{xright =} \DecValTok{100}\NormalTok{, }\DataTypeTok{ybottom =} \DecValTok{26}\NormalTok{, }\DataTypeTok{ytop =} \DecValTok{100}\NormalTok{, }\DataTypeTok{col =}\NormalTok{ scales}\OperatorTok{::}\KeywordTok{alpha}\NormalTok{(}\StringTok{"red"}\NormalTok{, }\FloatTok{0.5}\NormalTok{)) }
+\KeywordTok{rect}\NormalTok{(}\DataTypeTok{xleft =} \DecValTok{0}\NormalTok{, }\DataTypeTok{xright =} \DecValTok{45}\NormalTok{, }\DataTypeTok{ybottom =} \DecValTok{0}\NormalTok{, }\DataTypeTok{ytop =} \DecValTok{26}\NormalTok{, }\DataTypeTok{col =}\NormalTok{ scales}\OperatorTok{::}\KeywordTok{alpha}\NormalTok{(}\StringTok{"blue"}\NormalTok{, }\FloatTok{0.5}\NormalTok{)) }
+\KeywordTok{points}\NormalTok{(AGE, BMI,}\DataTypeTok{type=}\StringTok{"p"}\NormalTok{,}\DataTypeTok{pch=}\DecValTok{20}\NormalTok{,}\DataTypeTok{cex=}\DecValTok{2}\NormalTok{,}\DataTypeTok{col=}\StringTok{"blue"}\NormalTok{) }
+\KeywordTok{text}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ AGE }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{, }\DataTypeTok{y =}\NormalTok{ BMI, }\DataTypeTok{labels =}\NormalTok{ PID, }\DataTypeTok{col =} \StringTok{"black"}\NormalTok{) }
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{h =} \DecValTok{26}\NormalTok{, }\DataTypeTok{v =} \DecValTok{45}\NormalTok{, }\DataTypeTok{col =} \StringTok{"RED"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Notes_files/figure-latex/unnamed-chunk-51-1.pdf}
+
+"\ldots{}.Here the call to abline is for drawing vertical and horizontal
+lines so that we can count the numbers in each respective box. We now
+make the connection between set theory and operations clearer in the
+context of the data. In particular, we emphasize how set operations
+translate into logic operators that can then be used for data extraction
+and operations. Consider the following subsets of subjects:
+
+A subjects with BMI\textless{} 26 and B subjects older than 45
+(AGE\textgreater{} 45). Construct a logical indicator for which records
+fall into A\ldots{}."
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Group A, #represented by the points in the purple/blue regions}
+\NormalTok{index_BMI_less_}\DecValTok{26}\NormalTok{ =}\StringTok{ }\NormalTok{BMI }\OperatorTok{<}\StringTok{ }\DecValTok{26} 
+\CommentTok{#Group B, #represented by the points in the purple/red regions }
+\NormalTok{index_AGE_greater_}\DecValTok{45}\NormalTok{ =}\StringTok{ }\NormalTok{AGE }\OperatorTok{>}\StringTok{ }\DecValTok{45} 
+\end{Highlighting}
+\end{Shaded}
+
+``\ldots{}.Display the IDs for A and B. Here PID is the unique patient
+ID, though in many applications the PID can be more complex than just
+integer numbers\ldots{}.''
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{PID[index_BMI_less_}\DecValTok{26}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  1  4  5  6  7 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{PID[index_AGE_greater_}\DecValTok{45}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2 3 4 7 8 9
+\end{verbatim}
+
+Let us calculate (A ∩ B)\textsuperscript{c} , the complement of the
+intersection between A and B, which is shown by the non-purple regions
+in Figure 3.1. These are subjects who do not/are (note the c that stands
+for complement) (have a BMI less than 26) and (older than 45) and
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{index_A_int_B_compl =}\StringTok{ }\OperatorTok{!}\NormalTok{(index_BMI_less_}\DecValTok{26} \OperatorTok{&}\StringTok{ }\NormalTok{index_AGE_greater_}\DecValTok{45}\NormalTok{) }
+\NormalTok{PID[index_A_int_B_compl]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  1  2  3  5  6  8  9 10
+\end{verbatim}
+
+The translation of (A∩B\textsuperscript{c} into R is
+!(index\_BMI\_less\_26 \& index\_AGE\_greater\_45). Note that !
+indicates is not, or complement, and \& indicates and, or intersection.
+So, the resulting IDs are everybody, except the subject with IDs 4 and
+7.
+
+It would be instructive to conduct the same type of analysis for
+
+A\textsuperscript{c} ∪ B\textsuperscript{c} = (A ∪ B)\textsuperscript{c}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{index_A_int_B_compl =}\StringTok{ }\NormalTok{(index_BMI_less_}\DecValTok{26} \OperatorTok{&}\StringTok{ }\NormalTok{index_AGE_greater_}\DecValTok{45}\NormalTok{) }
+\NormalTok{PID[index_A_int_B_compl]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4 7
+\end{verbatim}
+
+(A ∪ B)\textsuperscript{c} ,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{index_A_int_B_compl =}\StringTok{ }\NormalTok{(index_BMI_less_}\DecValTok{26} \OperatorTok{&}\StringTok{ }\NormalTok{index_AGE_greater_}\DecValTok{45}\NormalTok{) }
+\NormalTok{PID[index_A_int_B_compl]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4 7
+\end{verbatim}
+
+and A\textsuperscript{c}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{index_A_int_B_compl =}\StringTok{ }\NormalTok{(index_BMI_less_}\DecValTok{26}\NormalTok{)}
+\NormalTok{PID[index_A_int_B_compl]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  1  4  5  6  7 10
+\end{verbatim}
+
+\hypertarget{an-intuitive-introduction-to-the-bootstrap}{%
+\subsection{3.2 An intuitive introduction to the
+bootstrap}\label{an-intuitive-introduction-to-the-bootstrap}}
+
+"\ldots{}.A major problem in practice is that, even if we run two
+identical experiments, data are never the same.
+
+However, even though the two samples will be different, they will have
+some things in common. Those things are the target of estimation, the
+probability and time for conversion from being healthy to developing
+lung cancer, and the original target population\ldots{}."
+
+In practice we often have one study and we are interested in
+understanding what would happen if multiple studies were conducted. The
+reason for that is fundamental and it has to do with the
+generalizability of the experiment. Indeed, a study would collect data
+for a subsample of the population to make predictions about the rate and
+expected time of transition to lung cancer in the overall population.
+Bootstrap is a widely used statistical technique based on resampling the
+data. The bootstrap is designed to create many potential studies that
+share the same characteristics with the study that collected the data
+and may represent the vari- ability of running these experiments without
+actually running the experiments\ldots{}."
+
+``\ldots{}.The nonparametric bootstrap is the procedure of resampling
+with replacement from a dataset, where the number of observations in
+each resampled dataset is equal to the number of observations in the
+original dataset\ldots{}.''
+
+So this is pretty much ``take multiple random samples, the game'' - Oh
+and here's one way to do it:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{4132697}\NormalTok{) }
+\NormalTok{nboot=}\DecValTok{3} \CommentTok{#number of boostrap samples }
+\NormalTok{nsubj=}\KeywordTok{nrow}\NormalTok{(data_bmi) }\CommentTok{#number of subjects }
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{nboot) }\CommentTok{#start bootstrapping }
+\NormalTok{  \{}\CommentTok{#begin the bootstrap for loop }
+\NormalTok{    resampling =}\StringTok{ }\KeywordTok{sample}\NormalTok{(nsubj, }\DataTypeTok{replace=}\OtherTok{TRUE}\NormalTok{) }\CommentTok{#sample with replacement }
+\NormalTok{    bootstrapped_data =}\StringTok{ }\NormalTok{data_bmi[resampling,] }\CommentTok{#resample the data set }
+    \KeywordTok{print}\NormalTok{(bootstrapped_data) }\CommentTok{#print bootstrapped datasets }
+    \KeywordTok{cat}\NormalTok{(}\StringTok{" }\CharTok{\textbackslash{}n}\StringTok{ }\CharTok{\textbackslash{}n}\StringTok{"}\NormalTok{) }\CommentTok{#add lines between datasets \}#end the bootstrap for loop}
+\NormalTok{  \}}\CommentTok{#end the bootstrap for loop}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      PID BMI SEX AGE
+## 6      6  18   0  40
+## 8      8  26   1  59
+## 2      2  27   0  57
+## 10    10  20   0  42
+## 3      3  31   1  66
+## 10.1  10  20   0  42
+## 9      9  34   1  65
+## 3.1    3  31   1  66
+## 1      1  22   1  45
+## 4      4  24   1  49
+##  
+##  
+##     PID BMI SEX AGE
+## 6     6  18   0  40
+## 6.1   6  18   0  40
+## 10   10  20   0  42
+## 8     8  26   1  59
+## 7     7  21   0  65
+## 8.1   8  26   1  59
+## 1     1  22   1  45
+## 1.1   1  22   1  45
+## 6.2   6  18   0  40
+## 5     5  23   0  33
+##  
+##  
+##     PID BMI SEX AGE
+## 7     7  21   0  65
+## 9     9  34   1  65
+## 3     3  31   1  66
+## 7.1   7  21   0  65
+## 3.1   3  31   1  66
+## 9.1   9  34   1  65
+## 8     8  26   1  59
+## 9.2   9  34   1  65
+## 2     2  27   0  57
+## 8.1   8  26   1  59
+##  
+## 
+\end{verbatim}
+
+A close look at these bootstrap samples will indicate what is meant by
+creating many potential studies that share the same characteristics. The
+subjects in every bootstrap sample are the same as those in the data,
+though some may not appear and others may appear multiple times. All
+information about the subject is preserved (information across columns
+is not scrambled), and the number of subjects in each bootstrap sample
+is the same as the number in the original dataset. This was done by
+using sampling with replacement of the subjects' IDs using the same
+probability. Sampling with replacement can be conceptualized as follows:
+
+1 consider a lottery machine that contains identical balls that have the
+name, or IDs, of n subjects; 2 sample one ball, record the ID and place
+the ball back into the lottery machine; 3 repeat the experiment n times.
+
+
+\end{document}
